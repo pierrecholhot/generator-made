@@ -1,38 +1,100 @@
 /*global describe, beforeEach, it*/
-'use strict';
 
 var path    = require('path');
 var helpers = require('yeoman-generator').test;
 
+describe('Made generator test', function () {
+  beforeEach(function (done) {
+    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+      if (err) {
+        return done(err);
+      }
 
-describe('made generator', function () {
-    beforeEach(function (done) {
-        helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-            if (err) {
-                return done(err);
-            }
+      this.made = helpers.createGenerator('made:app', [
+        '../../app', [
+          helpers.createDummyGenerator(),
+          'mocha:app'
+        ]
+      ]);
+      this.made.options['skip-install'] = true;
 
-            this.app = helpers.createGenerator('made:app', [
-                '../../app'
-            ]);
-            done();
-        }.bind(this));
+      done();
+    }.bind(this));
+  });
+
+  it('the generator can be required without throwing', function () {
+    // not testing the actual run of generators yet
+    this.app = require('../app');
+  });
+
+  it('creates expected files', function (done) {
+    var expected = [
+      ['bower.json', /"name": "temp"/],
+      ['package.json', /"name": "temp"/],
+      ['Gruntfile.js', /coffee:/],
+      'app/404.html',
+      'app/favicon.ico',
+      'app/robots.txt',
+      'app/index.html',
+      'app/scripts/main.coffee',
+      'app/styles/main.scss'
+    ];
+
+    helpers.mockPrompt(this.made, {
+      features: ['includeCompass']
     });
 
-    it('creates expected files', function (done) {
-        var expected = [
-            // add files you expect to exist here.
-            '.jshintrc',
-            '.editorconfig'
-        ];
-
-        helpers.mockPrompt(this.app, {
-            'someOption': true
-        });
-        this.app.options['skip-install'] = true;
-        this.app.run({}, function () {
-            helpers.assertFiles(expected);
-            done();
-        });
+    this.made.coffee = true;
+    this.made.run({}, function () {
+      helpers.assertFiles(expected);
+      done();
     });
+  });
+
+  it('creates expected files in non-AMD non-coffee mode', function (done) {
+    var expected = [
+      ['bower.json', /"name": "temp"/],
+      ['package.json', /"name": "temp"/],
+      'Gruntfile.js',
+      'app/404.html',
+      'app/favicon.ico',
+      'app/robots.txt',
+      'app/index.html',
+      'app/scripts/main.js',
+      'app/styles/main.scss'
+    ];
+
+    helpers.mockPrompt(this.made, {
+      features: ['includeCompass']
+    });
+
+    this.made.coffee = false;
+    this.made.run({}, function () {
+      helpers.assertFiles(expected);
+      done();
+    });
+  });
+
+  it('creates expected files in AMD mode', function (done) {
+    var expected = [
+      ['bower.json', /"name": "temp"/],
+      ['package.json', /"name": "temp"/],
+      'Gruntfile.js',
+      'app/404.html',
+      'app/favicon.ico',
+      'app/robots.txt',
+      'app/index.html',
+      'app/scripts/main.js',
+      'app/styles/main.scss'
+    ];
+
+    helpers.mockPrompt(this.made, {
+      features: ['includeCompass']
+    });
+
+    this.made.run({}, function () {
+      helpers.assertFiles(expected);
+      done();
+    });
+  });
 });
