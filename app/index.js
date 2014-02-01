@@ -40,7 +40,7 @@ MadeGenerator.prototype.askFor = function askFor() {
   // welcome message
   if (!this.options['skip-welcome-message']) {
     console.log(this.yeoman);
-    console.log(chalk.magenta('Out of the box I include HTML5 Boilerplate, jQuery, and a Gruntfile.js to build your app.'));
+    console.log(chalk.magenta('Out of the box I include HTML5 Boilerplate, jQuery, Express, Jade and a Gruntfile.js to build your app.'));
   }
 
   var prompts = [{
