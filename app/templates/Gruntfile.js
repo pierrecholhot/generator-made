@@ -105,7 +105,34 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    open: {
+      server: {
+        path: 'http://localhost:<%%= connect.options.port %>'
+      },
+      nexus4: {
+        path: 'http://www.browserstack.com/start#os=android&os_version=4.2&device=LG+Nexus+4&speed=1&start=true&url=http://localhost:<%%= connect.options.port %>'
+      },
+      nexus7: {
+        path: 'http://www.browserstack.com/start#os=android&os_version=4.1&device=Google+Nexus+7&speed=1&start=true&url=http://localhost:<%%= connect.options.port %>'
+      },
+      iphone5: {
+        path: 'http://www.browserstack.com/start#os=ios&os_version=6.0&device=iPhone+5&speed=1&start=true&url=http://localhost:<%%= connect.options.port %>'
+      }
+    },
+    // autoshot: {
+    //   defaultOptions: {
+    //     options: {
+    //       // necessary config
+    //       path: 'screenshots/',
+    //       remote: {
+    //         files: [
+    //           { src: 'http://localhost:<%%= connect.options.port %>', dest: 'screen.png', delay: 3000 }
+    //         ]
+    //       },
+    //       viewport: ['320x480','480x320','384x640','640x384','602x963','963x602','600x960','960x600','800x1280','1280x800','768x1024','1024x768']
+    //     }
+    //   }
+    // },
     // Empties folders to start fresh
     clean: {
       dist: {
@@ -204,7 +231,21 @@ module.exports = function (grunt) {
         }
       }
     },<% } %>
-
+    // Add vendor prefixed styles
+    jade: {
+      dist: {
+        options: {
+          pretty: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['{,*/}*.jade', '/views/**/{,*/}*.jade', '/views/{,*/}*.jade'],
+          dest: '.tmp',
+          ext: '.html'
+        }]
+      }
+    },
     // Add vendor prefixed styles
     autoprefixer: {
       options: {
@@ -363,6 +404,7 @@ module.exports = function (grunt) {
       dist: {
         devFile: '<%%= yeoman.app %>/bower_components/modernizr/modernizr.js',
         outputFile: '<%%= yeoman.dist %>/scripts/vendor/modernizr.js',
+        // Based on default settings on http://modernizr.com/download/
         extra : {
           shiv : true,
           printshiv : false,
@@ -370,7 +412,24 @@ module.exports = function (grunt) {
           mq : true,
           cssclasses : true
         },
+        // Based on default settings on http://modernizr.com/download/
+        extensibility : {
+          addtest : false,
+          prefixed : false,
+          teststyles : false,
+          testprops : false,
+          testallprops : false,
+          hasevents : false,
+          prefixes : false,
+          domprefixes : false
+        },
+        // When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
+        // You can override this by defining a "files" array below.
+        // "files" : [],
         parseFiles:false,
+        // When parseFiles = true, matchCommunityTests = true will attempt to
+        // match user-contributed tests.
+        matchCommunityTests : false,
         uglify: true
       }
     },<% } %>
