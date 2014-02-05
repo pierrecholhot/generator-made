@@ -1,19 +1,9 @@
 'use strict';
-<% if (mongo) { %>
-var mongoose = require('mongoose'),
-    Thing = mongoose.model('Thing');
-<% } %>
+
 /**
  * Get awesome things
  */
-exports.awesomeThings = function(req, res) {<% if (mongo) { %>
-  return Thing.find(function (err, things) {
-    if (!err) {
-      return res.json(things);
-    } else {
-      return res.send(err);
-    }
-  });<% } %><% if (!mongo) { %>
+exports.awesomeThings = function(req, res) {
   res.json([
     {
       name : 'HTML5 Boilerplate',
@@ -32,5 +22,5 @@ exports.awesomeThings = function(req, res) {<% if (mongo) { %>
       info : 'Flexible and minimalist web application framework for node.js.',
       awesomeness: 10
     }
-  ]);<% } %>
+  ]);
 };

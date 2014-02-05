@@ -2,9 +2,7 @@
 
 var express = require('express'),
     path = require('path'),
-    config = require('./config')<% if (mongoPassportUser) { %>,
-    passport = require('passport'),
-    mongoStore = require('connect-mongo')(express)<% } %>;
+    config = require('./config');
 
 /**
  * Express configuration
@@ -12,7 +10,7 @@ var express = require('express'),
 module.exports = function(app) {
   app.configure('development', function(){
     app.use(require('connect-livereload')());
-
+    app.locals.pretty = true;
     // Disable caching of scripts for easier testing
     app.use(function noCache(req, res, next) {
       if (req.url.indexOf('/scripts/') === 0) {
@@ -35,29 +33,12 @@ module.exports = function(app) {
     app.set('views', config.root + '/views');
   });
 
-  app.configure(function(){<% if (!jade) { %>
-    app.engine('html', require('ejs').renderFile);
-    app.set('view engine', 'html');<% } %><% if (jade) { %>
-    app.set('view engine', 'jade');<% } %>
+  app.configure(function(){
+    app.set('view engine', 'jade');
     app.use(express.logger('dev'));
     app.use(express.json());
     app.use(express.urlencoded());
-    app.use(express.methodOverride());<% if(mongoPassportUser) { %>
-    app.use(express.cookieParser());
-
-    // Persist sessions with mongoStore
-    app.use(express.session({
-      secret: 'angular-fullstack secret',
-      store: new mongoStore({
-        url: config.mongo.uri,
-        collection: 'sessions'
-      })
-    }));
-
-    //use passport session
-    app.use(passport.initialize());
-    app.use(passport.session());
-    <% } %>
+    app.use(express.methodOverride());
     // Router needs to be last
     app.use(app.router);
   });

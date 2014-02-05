@@ -4,6 +4,7 @@ var path = require('path');
 var spawn = require('child_process').spawn;
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var wiredep = require('wiredep');
 
 
 var MadeGenerator = module.exports = function MadeGenerator(args, options, config) {
@@ -105,7 +106,6 @@ MadeGenerator.prototype.editorConfig = function editorConfig() {
 
 MadeGenerator.prototype.h5bp = function h5bp() {
   this.copy('favicon.ico', 'app/favicon.ico');
-  this.copy('404.html', 'app/404.html');
   this.copy('robots.txt', 'app/robots.txt');
   this.copy('htaccess', 'app/.htaccess');
 };
@@ -115,45 +115,46 @@ MadeGenerator.prototype.mainStylesheet = function mainStylesheet() {
   this.copy(css, 'app/styles/' + css);
 };
 
-MadeGenerator.prototype.writeIndex = function writeIndex() {
+// MadeGenerator.prototype.writeIndex = function writeIndex() {
 
-  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
-  this.indexFile = this.engine(this.indexFile, this);
+//   this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+//   this.indexFile = this.engine(this.indexFile, this);
 
-  // wire Twitter Bootstrap plugins
-  if (this.includeBootstrap) {
-    var bs = 'bower_components/' + (this.includeCompass ? 'sass-' : '') + 'bootstrap/js/';
-    this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
-      bs + 'affix.js',
-      bs + 'alert.js',
-      bs + 'dropdown.js',
-      bs + 'tooltip.js',
-      bs + 'modal.js',
-      bs + 'transition.js',
-      bs + 'button.js',
-      bs + 'popover.js',
-      bs + 'carousel.js',
-      bs + 'scrollspy.js',
-      bs + 'collapse.js',
-      bs + 'tab.js'
-    ]);
-  }
+//   // wire Twitter Bootstrap plugins
+//   if (this.includeBootstrap) {
+//     var bs = 'bower_components/bootstrap' + (this.includeCompass ? '-sass/vendor/assets/javascripts/bootstrap/' : '/js/');
+//     this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
+//       bs + 'affix.js',
+//       bs + 'alert.js',
+//       bs + 'dropdown.js',
+//       bs + 'tooltip.js',
+//       bs + 'modal.js',
+//       bs + 'transition.js',
+//       bs + 'button.js',
+//       bs + 'popover.js',
+//       bs + 'carousel.js',
+//       bs + 'scrollspy.js',
+//       bs + 'collapse.js',
+//       bs + 'tab.js'
+//     ]);
+//   }
 
-  this.indexFile = this.appendFiles({
-    html: this.indexFile,
-    fileType: 'js',
-    optimizedPath: 'scripts/main.js',
-    sourceFileList: ['scripts/main.js'],
-    searchPath: '{app,.tmp}'
-  });
-};
+//   this.indexFile = this.appendFiles({
+//     html: this.indexFile,
+//     fileType: 'js',
+//     optimizedPath: 'scripts/main.js',
+//     sourceFileList: ['scripts/main.js'],
+//     searchPath: '{app,.tmp}'
+//   });
+// };
 
 MadeGenerator.prototype.app = function app() {
   this.mkdir('app');
   this.mkdir('app/scripts');
   this.mkdir('app/styles');
   this.mkdir('app/images');
-  this.write('app/index.html', this.indexFile);
+  this.mkdir('app/views');
+  // this.write('app/index.html', this.indexFile);
 
   if (this.coffee) {
     this.write(
@@ -165,6 +166,26 @@ MadeGenerator.prototype.app = function app() {
     this.write('app/scripts/main.js', 'console.log(\'\\\'Allo \\\'Allo!\');');
   }
 };
+MadeGenerator.prototype.server = function () {
+  this.template('express/server.js', 'server.js');
+  this.copy('express/jshintrc', 'lib/.jshintrc');
+  this.template('express/controllers/api.js', 'lib/controllers/api.js');
+  this.template('express/controllers/index.js', 'lib/controllers/index.js');
+  this.template('express/routes.js', 'lib/routes.js');
+
+  this.template('express/config/express.js', 'lib/config/express.js');
+  this.template('express/config/config.js', 'lib/config/config.js');
+  this.template('express/config/env/all.js', 'lib/config/env/all.js');
+  this.template('express/config/env/development.js', 'lib/config/env/development.js');
+  this.template('express/config/env/production.js', 'lib/config/env/production.js');
+  this.template('express/config/env/test.js', 'lib/config/env/test.js');
+};
+MadeGenerator.prototype.views = function () {
+  this.template('views/index.jade', 'app/views/index.jade');
+  this.template('views/layout.jade', 'app/views/layout.jade');
+  this.copy('views/404.jade', 'app/views/404.jade');
+};
+
 
 MadeGenerator.prototype.install = function () {
   if (this.options['skip-install']) {

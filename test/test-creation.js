@@ -37,7 +37,10 @@ describe('Made generator test', function() {
       'app/robots.txt',
       'app/index.html',
       'app/scripts/main.coffee',
-      'app/styles/main.scss'
+      'app/styles/main.scss',
+      'app/views/index.jade',
+      'app/views/layout.jade',
+      'server.js'
     ];
 
     helpers.mockPrompt(this.made, {
@@ -61,7 +64,10 @@ describe('Made generator test', function() {
       'app/robots.txt',
       'app/index.html',
       'app/scripts/main.js',
-      'app/styles/main.scss'
+      'app/styles/main.scss',
+      'app/views/index.jade',
+      'app/views/layout.jade',
+      'server.js'
     ];
 
     helpers.mockPrompt(this.made, {
@@ -85,7 +91,10 @@ describe('Made generator test', function() {
       'app/robots.txt',
       'app/index.html',
       'app/scripts/main.js',
-      'app/styles/main.scss'
+      'app/styles/main.scss',
+      'app/views/index.jade',
+      'app/views/layout.jade',
+      'server.js'
     ];
 
     helpers.mockPrompt(this.made, {
