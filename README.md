@@ -1,4 +1,4 @@
-# generator-made [![Build Status](https://secure.travis-ci.org/vdesbarres/generator-made.png?branch=master)](https://travis-ci.org/vdesbarres/generator-made) [![Dependency Status](https://david-dm.org/vdesbarres/generator-made.png)](https://david-dm.org/vdesbarres/generator-made) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+# generator-made [![Build Status](https://secure.travis-ci.org/vdesbarres/generator-made.png?branch=master)](https://travis-ci.org/vdesbarres/generator-made) [![Dependency Status](https://david-dm.org/vdesbarres/generator-made.png?theme=shields.io)](https://david-dm.org/vdesbarres/generator-made) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 A generator for [Yeoman](http://yeoman.io).
 
