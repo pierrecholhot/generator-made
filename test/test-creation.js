@@ -32,7 +32,6 @@ describe('Made generator test', function() {
       ['bower.json', /"name": "temp"/],
       ['package.json', /"name": "temp"/],
       ['Gruntfile.js', /coffee:/],
-      'app/404.html',
       'app/favicon.ico',
       'app/robots.txt',
       'app/index.html',
@@ -40,6 +39,16 @@ describe('Made generator test', function() {
       'app/styles/main.scss',
       'app/views/index.jade',
       'app/views/layout.jade',
+      'app/views/404.jade',
+      'lib/config/config.js',
+      'lib/config/env/all.js',
+      'lib/config/env/development.js',
+      'lib/config/env/production.js',
+      'lib/config/env/test.js',
+      'lib/config/express.js',
+      'lib/controllers/api.js',
+      'lib/controllers/index.js',
+      'lib/routes.js',
       'server.js'
     ];
 
@@ -58,8 +67,6 @@ describe('Made generator test', function() {
     var expected = [
       ['bower.json', /"name": "temp"/],
       ['package.json', /"name": "temp"/],
-      'Gruntfile.js',
-      'app/404.html',
       'app/favicon.ico',
       'app/robots.txt',
       'app/index.html',
@@ -67,6 +74,16 @@ describe('Made generator test', function() {
       'app/styles/main.scss',
       'app/views/index.jade',
       'app/views/layout.jade',
+      'app/views/404.jade',
+      'lib/config/config.js',
+      'lib/config/env/all.js',
+      'lib/config/env/development.js',
+      'lib/config/env/production.js',
+      'lib/config/env/test.js',
+      'lib/config/express.js',
+      'lib/controllers/api.js',
+      'lib/controllers/index.js',
+      'lib/routes.js',
       'server.js'
     ];
 
@@ -85,8 +102,6 @@ describe('Made generator test', function() {
     var expected = [
       ['bower.json', /"name": "temp"/],
       ['package.json', /"name": "temp"/],
-      'Gruntfile.js',
-      'app/404.html',
       'app/favicon.ico',
       'app/robots.txt',
       'app/index.html',
@@ -94,6 +109,16 @@ describe('Made generator test', function() {
       'app/styles/main.scss',
       'app/views/index.jade',
       'app/views/layout.jade',
+      'app/views/404.jade',
+      'lib/config/config.js',
+      'lib/config/env/all.js',
+      'lib/config/env/development.js',
+      'lib/config/env/production.js',
+      'lib/config/env/test.js',
+      'lib/config/express.js',
+      'lib/controllers/api.js',
+      'lib/controllers/index.js',
+      'lib/routes.js',
       'server.js'
     ];
 
